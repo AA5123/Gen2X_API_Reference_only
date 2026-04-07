@@ -55,6 +55,246 @@
         }
     ],
     "paths": {
+        "/enable_tag_protection": {
+            "post": {
+                "tags": [
+                    "Tag Protection"
+                ],
+                "summary": "Enable Tag Protection",
+                "description": "﻿Locks a specific tag using Impinj TagProtect so it becomes invisible to all readers that do not have the correct password.\n\nSend the tag's EPC ID and 32-bit access password — the tag stops responding to standard inventory until protection is explicitly removed. The tag becomes RF silent and does not respond to Gen2 commands unless the reader first provides the correct password.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "command",
+                                    "command_id",
+                                    "payload"
+                                ],
+                                "properties": {
+                                    "command": {
+                                        "type": "string",
+                                        "description": "MQTT command name",
+                                        "enum": [
+                                            "set_impinjGen2X"
+                                        ]
+                                    },
+                                    "command_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "Unique identifier to correlate request with response"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "required": [
+                                            "tagProtect"
+                                        ],
+                                        "properties": {
+                                            "tagProtect": {
+                                                "type": "object",
+                                                "required": [
+                                                    "action",
+                                                    "password",
+                                                    "tagID"
+                                                ],
+                                                "properties": {
+                                                    "action": {
+                                                        "type": "string",
+                                                        "description": "Enables Tag Protection on the tag",
+                                                        "enum": [
+                                                            "enableTagProtection"
+                                                        ]
+                                                    },
+                                                    "password": {
+                                                        "type": "string",
+                                                        "minLength": 8,
+                                                        "maxLength": 8,
+                                                        "pattern": "^[0-9A-Fa-f]{8}$",
+                                                        "description": "8-character hexadecimal 32-bit password"
+                                                    },
+                                                    "tagID": {
+                                                        "type": "string",
+                                                        "description": "Tag EPC ID"
+                                                    }
+                                                },
+                                                "description": "Tag protection configuration"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "enable_tag_protection response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "command",
+                                        "command_id",
+                                        "payload",
+                                        "response"
+                                    ],
+                                    "properties": {
+                                        "command": {
+                                            "type": "string",
+                                            "description": "MQTT command name that was executed",
+                                            "enum": ["set_impinjGen2X"]
+                                        },
+                                        "command_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "Unique identifier correlating this response to the original request"
+                                        },
+                                        "payload": {
+                                            "type": "object",
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "description": "Response message"
+                                                }
+                                            },
+                                            "description": "Response payload data"
+                                        },
+                                        "response": {
+                                            "type": "string",
+                                            "enum": ["success", "failure"],
+                                            "description": "Response status indicating success or failure"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disable_tag_protection": {
+            "post": {
+                "tags": [
+                    "Tag Protection"
+                ],
+                "summary": "Disable Tag Protection",
+                "description": "﻿Removes the TagProtect lock from a specific tag. Once disabled, the tag becomes visible to all readers again without needing any password.\n\nSend the same tag ID and password that were used when protection was enabled.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "command",
+                                    "command_id",
+                                    "payload"
+                                ],
+                                "properties": {
+                                    "command": {
+                                        "type": "string",
+                                        "description": "MQTT command name",
+                                        "enum": [
+                                            "set_impinjGen2X"
+                                        ]
+                                    },
+                                    "command_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "Unique identifier to correlate request with response"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "required": [
+                                            "tagProtect"
+                                        ],
+                                        "properties": {
+                                            "tagProtect": {
+                                                "type": "object",
+                                                "required": [
+                                                    "action",
+                                                    "password",
+                                                    "tagID"
+                                                ],
+                                                "properties": {
+                                                    "action": {
+                                                        "type": "string",
+                                                        "description": "Disables Tag Protection on the tag",
+                                                        "enum": [
+                                                            "disableTagProtection"
+                                                        ]
+                                                    },
+                                                    "password": {
+                                                        "type": "string",
+                                                        "minLength": 8,
+                                                        "maxLength": 8,
+                                                        "pattern": "^[0-9A-Fa-f]{8}$",
+                                                        "description": "8-character hexadecimal 32-bit password"
+                                                    },
+                                                    "tagID": {
+                                                        "type": "string",
+                                                        "description": "Tag EPC ID"
+                                                    }
+                                                },
+                                                "description": "Tag protection configuration"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "disable_tag_protection response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "command",
+                                        "command_id",
+                                        "payload",
+                                        "response"
+                                    ],
+                                    "properties": {
+                                        "command": {
+                                            "type": "string",
+                                            "description": "MQTT command name that was executed",
+                                            "enum": ["set_impinjGen2X"]
+                                        },
+                                        "command_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "Unique identifier correlating this response to the original request"
+                                        },
+                                        "payload": {
+                                            "type": "object",
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "description": "Response message"
+                                                }
+                                            },
+                                            "description": "Response payload data"
+                                        },
+                                        "response": {
+                                            "type": "string",
+                                            "enum": ["success", "failure"],
+                                            "description": "Response status indicating success or failure"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/enable_tag_visibility": {
             "post": {
                 "tags": [
