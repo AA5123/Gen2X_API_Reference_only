@@ -30,7 +30,7 @@
     <button id="font-scale-down" title="Decrease font size">&minus;</button>
     <span id="font-scale-value">100%</span>
     <button id="font-scale-up" title="Increase font size">+</button>
-    <button id="font-scale-reset" title="Reset to default" style="font-size:12px;width:auto;padding:0 8px;">Reset</button>
+    <button id="font-scale-reset" title="Reset to default">Reset</button>
   </div>
 
   <script>
@@ -50,8 +50,8 @@
         /* Blockquotes */
         .replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
         /* Headers */
-        .replace(/^### (.+)$/gm, '<h5 style="font-size:1.125rem;font-weight:700;color:#111;margin:24px 0 12px;">$1</h5>')
-        .replace(/^## (.+)$/gm, function(_, t) { return '<h4 id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '" style="font-size:1.25rem;font-weight:700;color:#111;margin:32px 0 16px;border-bottom:1px solid #ddd;padding-bottom:8px;">' + t + '</h4>'; })
+        .replace(/^### (.+)$/gm, '<h5 class="md-h3">$1</h5>')
+        .replace(/^## (.+)$/gm, function(_, t) { return '<h4 class="md-h2" id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '">' + t + '</h4>'; })
         /* Bold + inline code */
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/`([^`]+)`/g, '<code>$1</code>')
@@ -62,7 +62,7 @@
           var items = block.trim().split('\n').map(function (l) {
             return '<li>' + l.replace(/^\d+\.\s*/, '') + '</li>';
           }).join('');
-          return '<ol style="padding-left:24px;margin:8px 0;">' + items + '</ol>';
+          return '<ol class="md-ol">' + items + '</ol>';
         })
         /* Unordered lists */
         .replace(/(?:^|\n)(- .+(?:\n- .+)*)/g, function (_, block) {
@@ -496,7 +496,7 @@
       })
       .then(render)
       .catch(function (err) {
-        document.getElementById('content').innerHTML = '<p style="color:red;">Error loading spec: ' + escHtml(err.message) + '</p>';
+        document.getElementById('content').innerHTML = '<p class="error-msg">Error loading spec: ' + escHtml(err.message) + '</p>';
       });
 
     /* ── Font scale ───────────────────────────────────── */

@@ -543,14 +543,47 @@ pre {
  margin-bottom: var(--space-6);
 }
 
-.info-description h4 {
+.info-description h4,
+h4.md-h2 {
  font-size: var(--text-lg);
  font-weight: 700;
  color: var(--color-text-primary);
- margin-top: var(--space-4);
- margin-bottom: var(--space-2);
+ margin-top: var(--space-5);
+ margin-bottom: var(--space-3);
  border-bottom: 1px solid var(--color-border);
- padding-bottom: var(--space-1);
+ padding-bottom: var(--space-2);
+}
+
+h5.md-h3 {
+ font-size: 1.125rem;
+ font-weight: 700;
+ color: var(--color-text-primary);
+ margin: var(--space-4) 0 var(--space-2);
+}
+
+/* ================================
+  Markdown Ordered Lists
+================================ */
+ol.md-ol {
+ padding-left: 24px;
+ margin: var(--space-2) 0;
+}
+
+/* ================================
+  Font Scale Reset Button
+================================ */
+#font-scale-reset {
+ font-size: var(--text-xs);
+ width: auto;
+ padding: 0 var(--space-2);
+}
+
+/* ================================
+  Error Message
+================================ */
+.error-msg {
+ color: #dc2626;
+ font-weight: 600;
 }
 
 /* ================================
