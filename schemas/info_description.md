@@ -17,9 +17,10 @@ Set up your MQTT connection, broker, and topic before using this API. For setup 
 
 ## Get started
 
-1. Configure the Gen2X features you want to use with the set commands below.
-2. Verify your configuration with `get_gen2x_config`.
-3. Stop the radio if it's running.
-4. Start the radio with `start_with_gen2x` and set `applyImpinjGen2X` to `true`.
+1. **Authenticate** — Log in to the reader to get an authentication token. Include this token in all subsequent requests.
+2. **Check current state** — Send `get_gen2x_config` to see which Gen2X features are currently active on the reader.
+3. **Configure features** — Use the set commands below to configure the Gen2X features you want to use.
+4. **Stop the radio** — Stop the radio before applying configuration changes.
+5. **Start with Gen2X** — Send `start_with_gen2x` and set `applyImpinjGen2X` to `true` to apply your configuration and start the radio.
 
 > **Note:** You must stop the radio before applying Gen2X configuration changes. Starting the radio while it's already running returns an error.
