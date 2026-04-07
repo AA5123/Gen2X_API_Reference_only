@@ -50,8 +50,8 @@
         /* Blockquotes */
         .replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
         /* Headers */
-        .replace(/^### (.+)$/gm, '<h5 style="font-size:1rem;font-weight:700;color:#111;margin:12px 0 6px;">$1</h5>')
-        .replace(/^## (.+)$/gm, function(_, t) { return '<h4 id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '" style="font-size:1.1rem;font-weight:700;color:#111;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px;">' + t + '</h4>'; })
+        .replace(/^### (.+)$/gm, '<h5 style="font-size:1.125rem;font-weight:700;color:#111;margin:24px 0 12px;">$1</h5>')
+        .replace(/^## (.+)$/gm, function(_, t) { return '<h4 id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '" style="font-size:1.25rem;font-weight:700;color:#111;margin:32px 0 16px;border-bottom:1px solid #ddd;padding-bottom:8px;">' + t + '</h4>'; })
         /* Bold + inline code */
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/`([^`]+)`/g, '<code>$1</code>')
