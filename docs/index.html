@@ -50,8 +50,8 @@
         /* Blockquotes */
         .replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
         /* Headers */
-        .replace(/^### (.+)$/gm, '<h5 class="md-h3">$1</h5>')
-        .replace(/^## (.+)$/gm, function(_, t) { return '<h4 class="md-h2" id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '">' + t + '</h4>'; })
+        .replace(/^### (.+)$/gm, '<h3 class="md-h3">$1</h3>')
+        .replace(/^## (.+)$/gm, function(_, t) { return '<h2 class="md-h2" id="info-' + t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '">' + t + '</h2>'; })
         /* Bold + inline code */
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/`([^`]+)`/g, '<code>$1</code>')
@@ -70,15 +70,19 @@
             return '<li>' + l.replace(/^- /, '') + '</li>';
           }).join('');
           return '<ul>' + items + '</ul>';
-        })
-        /* Paragraphs */
-        .replace(/\n{2,}/g, '</p><p>')
-        .replace(/\n/g, '<br>');
-      /* Wrap in paragraph if not starting with a block element */
-      if (!/^<(pre|blockquote|h[1-6]|ul|ol|div|table)/.test(html)) {
-        html = '<p>' + html + '</p>';
-      }
-      return html;
+          });
+
+        return html
+          .split(/\n{2,}/)
+          .map(function (block) {
+            var trimmed = block.trim();
+            if (!trimmed) return '';
+            if (/^<(pre|blockquote|h[1-6]|ul|ol|div|table)/.test(trimmed)) {
+              return trimmed;
+            }
+            return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+          })
+          .join('');
     }
 
     function escHtml(s) {
