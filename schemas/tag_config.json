@@ -14,8 +14,6 @@
     },
     "operation_order": {
         "Tag Protection": [
-            "enable_tag_protection",
-            "disable_tag_protection",
             "enable_tag_visibility",
             "disable_tag_visibility",
             "enable_short_range"

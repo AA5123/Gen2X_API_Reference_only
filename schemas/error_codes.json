@@ -13,8 +13,6 @@
             "description": "General failure",
             "iot_status_code": "GENERAL_FAILURE",
             "commands": [
-                "enable_tag_protection",
-                "disable_tag_protection",
                 "enable_tag_visibility",
                 "disable_tag_visibility",
                 "enable_short_range",
@@ -35,8 +33,6 @@
             "description": "Invalid password",
             "iot_status_code": "INVALID_PASSWORD",
             "commands": [
-                "enable_tag_protection",
-                "disable_tag_protection",
                 "enable_tag_visibility",
                 "disable_tag_visibility",
                 "enable_short_range"
@@ -49,8 +45,6 @@
             "description": "Tag not found",
             "iot_status_code": "TAG_NOT_FOUND",
             "commands": [
-                "enable_tag_protection",
-                "disable_tag_protection",
                 "enable_short_range"
             ],
             "cause": "Target tag EPC not found in inventory",

@@ -15,6 +15,9 @@
 <body>
   <nav id="sidebar">
     <div id="sidebar-title">Gen2X API Reference</div>
+    <div id="sidebar-search-wrap">
+      <input id="sidebar-search" type="search" placeholder="Search endpoints, tags..." aria-label="Search API docs" />
+    </div>
     <div id="nav-content"></div>
   </nav>
   <main id="main">
@@ -317,6 +320,7 @@
     function render(spec) {
       var content = document.getElementById('content');
       var nav = document.getElementById('nav-content');
+      var searchInput = document.getElementById('sidebar-search');
       var html = '';
       var navHtml = '';
 
@@ -391,6 +395,42 @@
 
       content.innerHTML = html;
       nav.innerHTML = navHtml;
+
+      /* Sidebar search filter (tag + operation links) */
+      if (searchInput && !searchInput.getAttribute('data-wired')) {
+        searchInput.setAttribute('data-wired', '1');
+        searchInput.addEventListener('input', function () {
+          var q = (searchInput.value || '').toLowerCase().trim();
+          var tagLinks = Array.prototype.slice.call(nav.querySelectorAll('.nav-tag'));
+          var opLinks = Array.prototype.slice.call(nav.querySelectorAll('.nav-op'));
+
+          if (!q) {
+            tagLinks.forEach(function (tag) { tag.style.display = ''; });
+            opLinks.forEach(function (op) { op.style.display = ''; });
+            return;
+          }
+
+          var opMatchByTag = {};
+          opLinks.forEach(function (op) {
+            var text = (op.textContent || '').toLowerCase();
+            var match = text.indexOf(q) !== -1;
+            op.style.display = match ? '' : 'none';
+
+            if (match) {
+              var prev = op.previousElementSibling;
+              while (prev && !prev.classList.contains('nav-tag')) prev = prev.previousElementSibling;
+              if (prev) opMatchByTag[prev.getAttribute('href')] = true;
+            }
+          });
+
+          tagLinks.forEach(function (tag) {
+            var tagText = (tag.textContent || '').toLowerCase();
+            var tagMatch = tagText.indexOf(q) !== -1;
+            var hasMatchingOp = !!opMatchByTag[tag.getAttribute('href')];
+            tag.style.display = (tagMatch || hasMatchingOp) ? '' : 'none';
+          });
+        });
+      }
 
       /* Wire up tabs */
       document.querySelectorAll('.tab-btn').forEach(function (btn) {

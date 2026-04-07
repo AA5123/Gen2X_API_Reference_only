@@ -1,10 +1,4 @@
 {
-    "enable_tag_protection": {
-        "Tested example": "Enable protection on a specific tag using password-based mechanism"
-    },
-    "disable_tag_protection": {
-        "Tested example": "Remove protection from a specific tag"
-    },
     "enable_tag_visibility": {
         "Tested example": "Enable the reader to see protected tags"
     },
