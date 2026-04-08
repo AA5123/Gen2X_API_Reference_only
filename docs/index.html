@@ -352,7 +352,8 @@
               resHtml += '<div class="tab-panel active" id="res-ex-' + id + '">';
               if (resExKeys.length > 1) {
                 var resExVals = {}; resExKeys.forEach(function(k){ resExVals[k] = resExObj[k].value; });
-                resHtml += '<select class="example-select" data-panel="res-ex-' + id + '" data-examples="' + escHtml(JSON.stringify(resExVals)) + '">';
+                var encodedExamples = encodeURIComponent(JSON.stringify(resExVals));
+                resHtml += '<select class="example-select" data-panel="res-ex-' + id + '" data-examples="' + encodedExamples + '">';
                 resExKeys.forEach(function(k) { resHtml += '<option value="' + escHtml(k) + '">' + escHtml(k) + '</option>'; });
                 resHtml += '</select>';
               }
@@ -527,7 +528,7 @@
           var examplesJson = sel.getAttribute('data-examples');
           if (!examplesJson) return;
           try {
-            var examples = JSON.parse(examplesJson);
+            var examples = JSON.parse(decodeURIComponent(examplesJson));
             var val = examples[sel.value];
             if (val !== undefined) {
               pre.textContent = JSON.stringify(val, null, 2);
