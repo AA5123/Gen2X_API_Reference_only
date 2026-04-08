@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>Gen2X API Reference</title>
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700,900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/custom-api.css?v=20260407-1" />
+  <link rel="stylesheet" href="css/custom-api.css?v=20260408-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
@@ -504,6 +504,7 @@
       });
 
     /* ── Font scale ───────────────────────────────────── */
+    var BASE_FONT_PX = 15;
     var STEP = 0.05, MIN = 0.5, MAX = 2.0, KEY = 'mqtt-font-scale';
     var saved = parseFloat(localStorage.getItem(KEY));
     var scale = (saved >= MIN && saved <= MAX) ? saved : 1;
@@ -511,7 +512,7 @@
     var display = document.getElementById('font-scale-value');
     function applyScale() {
       scale = Math.round(scale * 100) / 100;
-      document.documentElement.style.fontSize = (16 * scale) + 'px';
+      document.documentElement.style.fontSize = (BASE_FONT_PX * scale) + 'px';
       display.textContent = Math.round(scale * 100) + '%';
       localStorage.setItem(KEY, scale);
     }
