@@ -183,9 +183,26 @@
           var wrapper = document.createElement('div');
           wrapper.className = 'json-viewer-wrap';
 
-          /* Copy button for json-viewer */
+          /* Toolbar */
+          var toolbar = document.createElement('div');
+          toolbar.className = 'jv-toolbar';
+
+          var expandBtn = document.createElement('button');
+          expandBtn.className = 'jv-toolbar-btn';
+          expandBtn.textContent = 'Expand all';
+          expandBtn.addEventListener('click', function () {
+            viewer.expandAll();
+          });
+
+          var collapseBtn = document.createElement('button');
+          collapseBtn.className = 'jv-toolbar-btn';
+          collapseBtn.textContent = 'Collapse all';
+          collapseBtn.addEventListener('click', function () {
+            viewer.collapseAll();
+          });
+
           var copyBtn = document.createElement('button');
-          copyBtn.className = 'copy-btn json-viewer-copy';
+          copyBtn.className = 'jv-toolbar-btn jv-copy-btn';
           copyBtn.textContent = 'Copy';
           copyBtn.addEventListener('click', function () {
             navigator.clipboard.writeText(rawText);
@@ -193,7 +210,11 @@
             setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
           });
 
-          wrapper.appendChild(copyBtn);
+          toolbar.appendChild(expandBtn);
+          toolbar.appendChild(collapseBtn);
+          toolbar.appendChild(copyBtn);
+
+          wrapper.appendChild(toolbar);
           wrapper.appendChild(viewer);
           pre.parentNode.replaceChild(wrapper, pre);
 
