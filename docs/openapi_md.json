@@ -23,15 +23,12 @@
             "description": "﻿Use Tag Quieting to silence specific tags by EPC ID. Quieted tags do not respond during inventory rounds, reducing unwanted reads and improving accuracy in high-density environments.\n\nUse the commands in this section to quiet and unquiet individual tags."
         },
         {
-            "name": "Configuration",
-            "description": "Retrieve the current Gen2X feature configuration from the reader."
+            "name": "Gen2X Configuration Retrieval",
+            "description": "﻿Use the configuration commands to read back the Gen2X settings that are currently stored on the reader. This lets you verify which features — such as TagProtect, FastID, TagFocus, and Tag Quieting — are active before you start the radio."
         },
         {
             "name": "Control Commands",
             "description": "Start and stop the radio while applying Gen2X configuration."
-        },
-        {
-            "name": "Gen2X Configuration Retrieval"
         }
     ],
     "x-tagGroups": [
@@ -52,14 +49,8 @@
         {
             "name": "Configuration & Control",
             "tags": [
-                "Configuration",
+                "Gen2X Configuration Retrieval",
                 "Control Commands"
-            ]
-        },
-        {
-            "name": "Other",
-            "tags": [
-                "Gen2X Configuration Retrieval"
             ]
         }
     ],
@@ -1887,6 +1878,209 @@
                 ]
             }
         },
+        "/get_gen2x_config": {
+            "post": {
+                "tags": [
+                    "Gen2X Configuration Retrieval"
+                ],
+                "summary": "Get Gen2X Config",
+                "description": "﻿Reads back the Gen2X configuration that's currently stored on the reader. Use this command to verify which features — such as TagProtect, FastID, TagFocus, and Tag Quieting — are active before you start the radio.\n\nThe response payload mirrors the last applied configuration. If no Gen2X configuration has been set, the response returns an empty object.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "command",
+                                    "command_id",
+                                    "payload"
+                                ],
+                                "properties": {
+                                    "command": {
+                                        "type": "string",
+                                        "description": "MQTT command name",
+                                        "enum": [
+                                            "get_impinjGen2X"
+                                        ]
+                                    },
+                                    "command_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "Unique identifier to correlate request with response"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "description": "Empty payload for get commands"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Tested example": {
+                                    "description": "Retrieve current Gen2X configuration",
+                                    "value": {
+                                        "command": "get_impinjGen2X",
+                                        "command_id": "9d744286-7b97-40b8-9e91-190df0334557",
+                                        "payload": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "get_gen2x_config response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "command",
+                                        "command_id",
+                                        "payload",
+                                        "response"
+                                    ],
+                                    "properties": {
+                                        "command": {
+                                            "type": "string",
+                                            "description": "MQTT command name that was executed",
+                                            "enum": [
+                                                "get_impinjGen2X"
+                                            ]
+                                        },
+                                        "command_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "Unique identifier correlating this response to the original request"
+                                        },
+                                        "payload": {
+                                            "type": "object",
+                                            "description": "Current Gen2X configuration. Only previously configured feature objects are included.",
+                                            "properties": {
+                                                "fastID": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "enabled": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "description": "FastID configuration (present only if previously configured)"
+                                                },
+                                                "tagProtect": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "action": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "enableTagProtection",
+                                                                "disableTagProtection",
+                                                                "enableTagVisibility",
+                                                                "disableTagVisibility"
+                                                            ]
+                                                        },
+                                                        "password": {
+                                                            "type": "string"
+                                                        },
+                                                        "tagID": {
+                                                            "type": "string"
+                                                        },
+                                                        "enableShortRange": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "description": "Tag protection configuration (present only if previously configured)"
+                                                },
+                                                "tagFocus": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "enabled": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "description": "TagFocus configuration (present only if previously configured)"
+                                                },
+                                                "tagQuieting": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "basic": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "action": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "quiet",
+                                                                        "unquiet"
+                                                                    ]
+                                                                },
+                                                                "tagIDs": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "description": "Tag quieting configuration (present only if previously configured)"
+                                                }
+                                            }
+                                        },
+                                        "response": {
+                                            "type": "string",
+                                            "enum": [
+                                                "success",
+                                                "failure"
+                                            ],
+                                            "description": "Response status indicating success or failure"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "example1": {
+                                        "value": {
+                                            "command": "get_impinjGen2X",
+                                            "command_id": "9d744286-7b97-40b8-9e91-190df0334557",
+                                            "payload": {
+                                                "tagQuieting": {
+                                                    "basic": {
+                                                        "action": "unquiet",
+                                                        "tagIDs": [
+                                                            "e28011b0a5050076c4d751e9",
+                                                            "e28011b0a5050076c4d77307",
+                                                            "e28011b0a5050076c4d751ec",
+                                                            "e28011b0a5050076c4d7530a",
+                                                            "e28011b0a5050076c4d751e4"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "response": "success"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-error-codes": [
+                    {
+                        "code": 0,
+                        "description": "Success",
+                        "iot_status_code": "SUCCESS",
+                        "cause": "",
+                        "recommended_action": ""
+                    },
+                    {
+                        "code": 1,
+                        "description": "General failure",
+                        "iot_status_code": "GENERAL_FAILURE",
+                        "cause": "Internal error or invalid payload",
+                        "recommended_action": "Check the payload format and retry"
+                    }
+                ]
+            }
+        },
         "/start": {
             "post": {
                 "tags": [
@@ -2112,209 +2306,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/get_gen2x_config": {
-            "post": {
-                "tags": [
-                    "Gen2X Configuration Retrieval"
-                ],
-                "summary": "Get Gen2X Config",
-                "description": "﻿Reads back the Gen2X configuration that's currently stored on the reader. Use this command to verify which features — such as TagProtect, FastID, TagFocus, and Tag Quieting — are active before you start the radio.\n\nThe response payload mirrors the last applied configuration. If no Gen2X configuration has been set, the response returns an empty object.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "command",
-                                    "command_id",
-                                    "payload"
-                                ],
-                                "properties": {
-                                    "command": {
-                                        "type": "string",
-                                        "description": "MQTT command name",
-                                        "enum": [
-                                            "get_impinjGen2X"
-                                        ]
-                                    },
-                                    "command_id": {
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "description": "Unique identifier to correlate request with response"
-                                    },
-                                    "payload": {
-                                        "type": "object",
-                                        "description": "Empty payload for get commands"
-                                    }
-                                }
-                            },
-                            "examples": {
-                                "Tested example": {
-                                    "description": "Retrieve current Gen2X configuration",
-                                    "value": {
-                                        "command": "get_impinjGen2X",
-                                        "command_id": "9d744286-7b97-40b8-9e91-190df0334557",
-                                        "payload": {}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "default": {
-                        "description": "get_gen2x_config response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "command",
-                                        "command_id",
-                                        "payload",
-                                        "response"
-                                    ],
-                                    "properties": {
-                                        "command": {
-                                            "type": "string",
-                                            "description": "MQTT command name that was executed",
-                                            "enum": [
-                                                "get_impinjGen2X"
-                                            ]
-                                        },
-                                        "command_id": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "Unique identifier correlating this response to the original request"
-                                        },
-                                        "payload": {
-                                            "type": "object",
-                                            "description": "Current Gen2X configuration. Only previously configured feature objects are included.",
-                                            "properties": {
-                                                "fastID": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "enabled": {
-                                                            "type": "boolean"
-                                                        }
-                                                    },
-                                                    "description": "FastID configuration (present only if previously configured)"
-                                                },
-                                                "tagProtect": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "action": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "enableTagProtection",
-                                                                "disableTagProtection",
-                                                                "enableTagVisibility",
-                                                                "disableTagVisibility"
-                                                            ]
-                                                        },
-                                                        "password": {
-                                                            "type": "string"
-                                                        },
-                                                        "tagID": {
-                                                            "type": "string"
-                                                        },
-                                                        "enableShortRange": {
-                                                            "type": "boolean"
-                                                        }
-                                                    },
-                                                    "description": "Tag protection configuration (present only if previously configured)"
-                                                },
-                                                "tagFocus": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "enabled": {
-                                                            "type": "boolean"
-                                                        }
-                                                    },
-                                                    "description": "TagFocus configuration (present only if previously configured)"
-                                                },
-                                                "tagQuieting": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "basic": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "action": {
-                                                                    "type": "string",
-                                                                    "enum": [
-                                                                        "quiet",
-                                                                        "unquiet"
-                                                                    ]
-                                                                },
-                                                                "tagIDs": {
-                                                                    "type": "array",
-                                                                    "items": {
-                                                                        "type": "string"
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    },
-                                                    "description": "Tag quieting configuration (present only if previously configured)"
-                                                }
-                                            }
-                                        },
-                                        "response": {
-                                            "type": "string",
-                                            "enum": [
-                                                "success",
-                                                "failure"
-                                            ],
-                                            "description": "Response status indicating success or failure"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "example1": {
-                                        "value": {
-                                            "command": "get_impinjGen2X",
-                                            "command_id": "9d744286-7b97-40b8-9e91-190df0334557",
-                                            "payload": {
-                                                "tagQuieting": {
-                                                    "basic": {
-                                                        "action": "unquiet",
-                                                        "tagIDs": [
-                                                            "e28011b0a5050076c4d751e9",
-                                                            "e28011b0a5050076c4d77307",
-                                                            "e28011b0a5050076c4d751ec",
-                                                            "e28011b0a5050076c4d7530a",
-                                                            "e28011b0a5050076c4d751e4"
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "response": "success"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-error-codes": [
-                    {
-                        "code": 0,
-                        "description": "Success",
-                        "iot_status_code": "SUCCESS",
-                        "cause": "",
-                        "recommended_action": ""
-                    },
-                    {
-                        "code": 1,
-                        "description": "General failure",
-                        "iot_status_code": "GENERAL_FAILURE",
-                        "cause": "Internal error or invalid payload",
-                        "recommended_action": "Check the payload format and retry"
-                    }
-                ]
             }
         }
     }
