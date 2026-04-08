@@ -169,6 +169,42 @@
       });
     }
 
+    /* ── Add collapse toggle to all pre blocks ──────────────────── */
+    function addCollapseToggles() {
+      document.querySelectorAll('pre:not([data-collapse-wired])').forEach(function (pre) {
+        pre.setAttribute('data-collapse-wired', '1');
+        var container = pre.parentElement;
+        
+        // Wrap pre in collapsible container if not already wrapped
+        if (!container.classList.contains('code-block-wrap')) {
+          var wrap = document.createElement('div');
+          wrap.className = 'code-block-wrap';
+          pre.parentNode.insertBefore(wrap, pre);
+          wrap.appendChild(pre);
+          
+          // Add toggle header
+          var toggle = document.createElement('div');
+          toggle.className = 'code-toggle';
+          var btn = document.createElement('button');
+          btn.className = 'code-toggle-btn';
+          btn.textContent = '−';
+          btn.setAttribute('aria-label', 'Expand/collapse code');
+          toggle.appendChild(btn);
+          var label = document.createElement('span');
+          label.textContent = 'Code';
+          toggle.appendChild(label);
+          wrap.insertBefore(toggle, pre);
+          
+          // Wire toggle
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var collapsed = wrap.classList.toggle('code-collapsed');
+            btn.textContent = collapsed ? '+' : '−';
+          });
+        }
+      });
+    }
+
     /* ── Wire schema expand/collapse toggles ──────────── */
     function wireSchemaToggles() {
       document.querySelectorAll('.schema-toggle-inline').forEach(function (btn) {
@@ -454,6 +490,7 @@
       });
 
       addCopyButtons();
+      addCollapseToggles();
 
       wireSchemaToggles();
       if (window.Prism) Prism.highlightAllUnder(document.getElementById('content'));
