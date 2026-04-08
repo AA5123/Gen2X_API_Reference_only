@@ -656,38 +656,28 @@ blockquote p:last-child {
   }
 }
 
-/* ── Code block styling ────────────────────────────────────────────── */
-pre {
-  background: var(--color-code-bg);
-  color: var(--color-code-text);
-  padding: var(--sp-3);
+/* ── @alenaksu/json-viewer web component styling ───────────────── */
+.json-viewer-wrap {
+  margin: var(--sp-3) 0;
+  border: 1px solid var(--color-code-border);
   border-radius: var(--radius-sm);
-  overflow-x: auto;
+  overflow: hidden;
 }
 
-code {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-}
-
-/* Expandable JSON details styling */
-details {
-  margin: 2px 0;
-}
-
-details summary {
-  cursor: pointer;
-  user-select: none;
-  padding: 2px 4px;
-  border-radius: 3px;
-  transition: background 0.2s;
-  display: inline-block;
-}
-
-details summary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-details[open] > summary {
-  margin-bottom: 2px;
+.json-viewer-wrap json-viewer {
+  --background-color: var(--color-code-bg);
+  --color: var(--color-code-text);
+  --font-family: var(--font-mono);
+  --font-size: var(--text-sm);
+  --string-color: #a3eea0;
+  --number-color: #d19a66;
+  --boolean-color: #4ba7ef;
+  --null-color: #df9cf3;
+  --property-color: #6fb3d2;
+  --preview-color: #deae8f;
+  --indent-size: 1.2em;
+  --indentguide-color: #334155;
+  --indentguide-color-active: #4b5563;
+  display: block;
+  padding: var(--sp-3) var(--sp-4);
 }
