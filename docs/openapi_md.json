@@ -24,7 +24,7 @@
         },
         {
             "name": "Configuration",
-            "description": "﻿Use the configuration commands to read back the Gen2X settings that are currently stored on the reader. This lets you verify which features — such as TagProtect, FastID, TagFocus, and Tag Quieting — are active before you start the radio."
+            "description": "Retrieve the current Gen2X feature configuration from the reader."
         },
         {
             "name": "Control Commands",
@@ -1887,6 +1887,127 @@
                 ]
             }
         },
+        "/start": {
+            "post": {
+                "tags": [
+                    "Control Commands"
+                ],
+                "summary": "Start",
+                "description": "Starts the radio with Gen2X configuration applied. Stop the radio first before issuing this command.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "command",
+                                    "command_id",
+                                    "payload"
+                                ],
+                                "properties": {
+                                    "command": {
+                                        "type": "string",
+                                        "description": "MQTT command name",
+                                        "enum": [
+                                            "start"
+                                        ]
+                                    },
+                                    "command_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "Unique identifier to correlate request with response"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "required": [
+                                            "applyImpinjGen2X"
+                                        ],
+                                        "properties": {
+                                            "applyImpinjGen2X": {
+                                                "type": "boolean",
+                                                "description": "true to apply Gen2X config when starting the radio",
+                                                "enum": [
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "description": "Command payload containing the feature configuration"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Tested example": {
+                                    "description": "Start radio with Gen2X features applied",
+                                    "value": {
+                                        "command": "start",
+                                        "command_id": "81dd51a2-b0d3-4099-b46a-5a3f82796ba1",
+                                        "payload": {
+                                            "applyImpinjGen2X": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "start response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "command",
+                                        "command_id",
+                                        "payload",
+                                        "response"
+                                    ],
+                                    "properties": {
+                                        "command": {
+                                            "type": "string",
+                                            "description": "MQTT command name that was executed",
+                                            "enum": [
+                                                "start"
+                                            ]
+                                        },
+                                        "command_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "Unique identifier correlating this response to the original request"
+                                        },
+                                        "payload": {
+                                            "type": "object",
+                                            "description": "Response payload data"
+                                        },
+                                        "response": {
+                                            "type": "string",
+                                            "enum": [
+                                                "success",
+                                                "failure"
+                                            ],
+                                            "description": "Response status indicating success or failure"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Tested example": {
+                                        "description": "Start radio with Gen2X features applied",
+                                        "value": {
+                                            "command": "start",
+                                            "command_id": "81dd51a2-b0d3-4099-b46a-5a3f82796ba1",
+                                            "payload": {},
+                                            "response": "success"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/stop": {
             "post": {
                 "tags": [
@@ -1991,150 +2112,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/start_with_gen2x": {
-            "post": {
-                "tags": [
-                    "Control Commands"
-                ],
-                "summary": "Start With Gen2X",
-                "description": "﻿Applies all staged Gen2X settings and starts the radio. Set `applyImpinjGen2X` to `true` for the Gen2X configuration to take effect.\n\n> **Important:** Stop the radio before you send this command. Starting while the radio is already running returns an error.\n\n**Workflow:**\n1. Configure Gen2X features using the set commands.\n2. Verify your configuration with `get_gen2x_config`.\n3. Stop the radio if it's running.\n4. Send this command with `applyImpinjGen2X: true`.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "command",
-                                    "command_id",
-                                    "payload"
-                                ],
-                                "properties": {
-                                    "command": {
-                                        "type": "string",
-                                        "description": "MQTT command name",
-                                        "enum": [
-                                            "start"
-                                        ]
-                                    },
-                                    "command_id": {
-                                        "type": "string",
-                                        "format": "uuid",
-                                        "description": "Unique identifier to correlate request with response"
-                                    },
-                                    "payload": {
-                                        "type": "object",
-                                        "required": [
-                                            "applyImpinjGen2X"
-                                        ],
-                                        "properties": {
-                                            "applyImpinjGen2X": {
-                                                "type": "boolean",
-                                                "description": "true to apply Gen2X config when starting the radio",
-                                                "enum": [
-                                                    true
-                                                ]
-                                            }
-                                        },
-                                        "description": "Command payload containing the feature configuration"
-                                    }
-                                }
-                            },
-                            "examples": {
-                                "Tested example": {
-                                    "description": "Start radio with Gen2X features applied",
-                                    "value": {
-                                        "command": "start",
-                                        "command_id": "81dd51a2-b0d3-4099-b46a-5a3f82796ba1",
-                                        "payload": {
-                                            "applyImpinjGen2X": true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "default": {
-                        "description": "start_with_gen2x response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "command",
-                                        "command_id",
-                                        "payload",
-                                        "response"
-                                    ],
-                                    "properties": {
-                                        "command": {
-                                            "type": "string",
-                                            "description": "MQTT command name that was executed",
-                                            "enum": [
-                                                "start"
-                                            ]
-                                        },
-                                        "command_id": {
-                                            "type": "string",
-                                            "format": "uuid",
-                                            "description": "Unique identifier correlating this response to the original request"
-                                        },
-                                        "payload": {
-                                            "type": "object",
-                                            "description": "Response payload data"
-                                        },
-                                        "response": {
-                                            "type": "string",
-                                            "enum": [
-                                                "success",
-                                                "failure"
-                                            ],
-                                            "description": "Response status indicating success or failure"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "Tested example": {
-                                        "description": "Start radio with Gen2X features applied",
-                                        "value": {
-                                            "command": "start",
-                                            "command_id": "81dd51a2-b0d3-4099-b46a-5a3f82796ba1",
-                                            "payload": {},
-                                            "response": "success"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-error-codes": [
-                    {
-                        "code": 0,
-                        "description": "Success",
-                        "iot_status_code": "SUCCESS",
-                        "cause": "",
-                        "recommended_action": ""
-                    },
-                    {
-                        "code": 1,
-                        "description": "General failure",
-                        "iot_status_code": "GENERAL_FAILURE",
-                        "cause": "Internal error or invalid payload",
-                        "recommended_action": "Check the payload format and retry"
-                    },
-                    {
-                        "code": 4,
-                        "description": "Radio busy",
-                        "iot_status_code": "RADIO_BUSY",
-                        "cause": "Radio is already running an operation",
-                        "recommended_action": "Stop the radio first, then retry"
-                    }
-                ]
             }
         },
         "/get_gen2x_config": {
