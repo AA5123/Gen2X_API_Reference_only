@@ -658,7 +658,9 @@ blockquote p:last-child {
 
 /* ── @alenaksu/json-viewer web component styling ───────────────── */
 .json-viewer-wrap {
+  position: relative;
   margin: var(--sp-3) 0;
+  background: var(--color-code-bg);
   border: 1px solid var(--color-code-border);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -669,15 +671,27 @@ blockquote p:last-child {
   --color: var(--color-code-text);
   --font-family: var(--font-mono);
   --font-size: var(--text-sm);
+  --line-height: 1.6rem;
   --string-color: #a3eea0;
   --number-color: #d19a66;
   --boolean-color: #4ba7ef;
   --null-color: #df9cf3;
   --property-color: #6fb3d2;
   --preview-color: #deae8f;
-  --indent-size: 1.2em;
+  --indent-size: 1.5em;
+  --indentguide-size: 1px;
+  --indentguide-style: solid;
   --indentguide-color: #334155;
   --indentguide-color-active: #4b5563;
   display: block;
-  padding: var(--sp-3) var(--sp-4);
+  padding: var(--sp-4);
+  max-height: 600px;
+  overflow: auto;
+}
+
+.json-viewer-copy {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  z-index: 2;
 }

@@ -176,15 +176,29 @@
         var code = pre.querySelector('code.language-json');
         if (!code) return;
         pre.setAttribute('data-json-processed', '1');
-        var text = code.textContent.trim();
+        var rawText = code.textContent.trim();
         try {
-          var json = JSON.parse(text);
+          var json = JSON.parse(rawText);
           var viewer = document.createElement('json-viewer');
-          viewer.data = json;
           var wrapper = document.createElement('div');
           wrapper.className = 'json-viewer-wrap';
+
+          /* Copy button for json-viewer */
+          var copyBtn = document.createElement('button');
+          copyBtn.className = 'copy-btn json-viewer-copy';
+          copyBtn.textContent = 'Copy';
+          copyBtn.addEventListener('click', function () {
+            navigator.clipboard.writeText(rawText);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+          });
+
+          wrapper.appendChild(copyBtn);
           wrapper.appendChild(viewer);
           pre.parentNode.replaceChild(wrapper, pre);
+
+          /* Set data after insertion into DOM */
+          viewer.data = json;
         } catch(e) {
           // Not valid JSON, keep original pre/code with Prism highlighting
         }
@@ -475,8 +489,8 @@
         });
       });
 
-      addCopyButtons();
       addCollapseToggles();
+      addCopyButtons();
 
       wireSchemaToggles();
       if (window.Prism) Prism.highlightAllUnder(document.getElementById('content'));
