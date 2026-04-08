@@ -656,29 +656,38 @@ blockquote p:last-child {
   }
 }
 
-/* ── Code block styling (json-viewer-js handles JSON rendering) ──── */
-.code-block-wrap {
-  margin: var(--sp-3) 0;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.code-block-content {
-  overflow-x: auto;
-  background: var(--color-code-bg);
-  color: var(--color-code-text);
-}
-
-/* Ensure json-viewer-js integrates with code styling */
+/* ── Code block styling ────────────────────────────────────────────── */
 pre {
   background: var(--color-code-bg);
   color: var(--color-code-text);
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
 }
 
-.json-viewer-js {
-  background: var(--color-code-bg);
-  color: var(--color-code-text);
+code {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
+}
+
+/* Expandable JSON details styling */
+details {
+  margin: 2px 0;
+}
+
+details summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+details summary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+details[open] > summary {
+  margin-bottom: 2px;
 }

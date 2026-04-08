@@ -8,11 +8,9 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700,900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/custom-api.css?v=20260408-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/json-viewer-js@1.0.0/public/index.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
-  <script src="https://unpkg.com/json-viewer-js@1.0.0/public/index.js"></script>
 </head>
 <body>
   <nav id="sidebar">
@@ -171,25 +169,47 @@
       });
     }
 
-    /* ── Render JSON with industry-standard json-viewer library ─── */
+    /* ── Render JSON with expand/collapse using native <details> tags ─── */
     function addCollapseToggles() {
-      document.querySelectorAll('pre > code.language-json:not([data-collapse-wired])').forEach(function (code) {
-        code.setAttribute('data-collapse-wired', '1');
+      document.querySelectorAll('pre > code.language-json:not([data-json-processed])').forEach(function (code) {
+        code.setAttribute('data-json-processed', '1');
         var text = code.textContent.trim();
         try {
           var json = JSON.parse(text);
-          // Use json-viewer-js library to render with expand/collapse
-          if (typeof JSONViewer !== 'undefined') {
-            var pre = code.parentElement;
-            pre.innerHTML = '';
-            var viewer = new JSONViewer();
-            viewer.showString(text, null, 1);
-            pre.appendChild(viewer.getContainer());
-          }
+          var html = renderJsonWithDetails(json, 0);
+          code.innerHTML = html;
+          // Re-apply Prism syntax highlighting won't work for details, so we'll use plain rendering
         } catch(e) {
-          // Not JSON, leave as is with syntax highlighting
+          // Not JSON, keep original
         }
       });
+    }
+    
+    function renderJsonWithDetails(val, depth) {
+      if (val === null) return '<span style="color: #cbd5e0;">null</span>';
+      if (typeof val === 'boolean') return '<span style="color: #f687b3;">' + val + '</span>';
+      if (typeof val === 'number') return '<span style="color: #f6ad55;">' + val + '</span>';
+      if (typeof val === 'string') return '<span style="color: #68d391;">"' + escHtml(val) + '"</span>';
+      
+      if (Array.isArray(val)) {
+        if (val.length === 0) return '<span style="color: #a0aec0;">[]</span>';
+        var items = val.map(function(item, idx) {
+          return '<div style="margin-left: 20px;">[' + idx + ']: ' + renderJsonWithDetails(item, depth + 1) + '</div>';
+        }).join('');
+        return '<details style="display: inline;"><summary style="cursor: pointer; color: #90cdf4; font-weight: bold;">[' + val.length + ' items]</summary><div style="margin-left: 0;">' + items + '</div></details>';
+      }
+      
+      if (typeof val === 'object') {
+        var keys = Object.keys(val);
+        if (keys.length === 0) return '<span style="color: #a0aec0;">{}</span>';
+        var items = keys.map(function(key) {
+          var v = val[key];
+          return '<div style="margin-left: 20px;"><span style="color: #90cdf4;">"' + escHtml(key) + '"</span>: ' + renderJsonWithDetails(v, depth + 1) + '</div>';
+        }).join('');
+        return '<details open style="display: inline;"><summary style="cursor: pointer; color: #90cdf4; font-weight: bold;">{' + keys.length + ' fields}</summary><div style="margin-left: 0;">' + items + '</div></details>';
+      }
+      
+      return String(val);
     }
 
     /* ── Wire schema expand/collapse toggles ──────────── */
