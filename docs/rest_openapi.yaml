@@ -57,6 +57,10 @@ paths:
   /cloud/impinjGen2X:
     get:
       tags:
+        - Tag Protection
+        - FastID
+        - TagFocus
+        - Tag Quieting
         - Gen2X Configuration Retrieval
       summary: Get Impinj Gen2X configuration
       description: >-
