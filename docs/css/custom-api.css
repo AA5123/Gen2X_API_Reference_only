@@ -145,9 +145,13 @@ a:hover {
 }
 
 #sidebar-logo {
-  width: 240px;
+  width: 100%;
+  max-width: 260px;
   height: auto;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
 }
 
 #sidebar-header {
