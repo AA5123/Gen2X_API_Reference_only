@@ -2087,7 +2087,7 @@
                     "Control Commands"
                 ],
                 "summary": "Start",
-                "description": "Starts the radio with Gen2X configuration applied. Stop the radio first before issuing this command.",
+                "description": "﻿**Description:**\nStarts the reader radio with all staged Gen2X configuration settings applied and active.\n\n**Usage:**\nSend this command after configuring your desired Gen2X settings (such as TagProtect, FastID, TagFocus, and Tag Quieting). Set the `applyImpinjGen2X` parameter to `true` to ensure all configuration changes take effect immediately when the radio starts. The radio will operate with all configured features active. You must stop the radio before making configuration changes using this start command.\n\n**Parameters:**\n- `applyImpinjGen2X` (boolean): Set to `true` to apply all staged Gen2X configurations\n\n**Behavior:**\n- Radio starts and applies staged Gen2X configuration\n- Configured features become active for inventory operations\n- Tag behavior follows the applied Gen2X settings",
                 "requestBody": {
                     "required": true,
                     "content": {
