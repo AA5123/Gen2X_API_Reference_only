@@ -1,6 +1,4 @@
-﻿## disable_tag_protection
-
-**Description:**
+﻿**Description:**
 Unlocks an RFID tag and removes the 32-bit access password protection, making it invisible mode disabled.
 
 **Usage:**
@@ -11,7 +9,6 @@ Send this command with the target tag's EPC ID and the 32-bit access password th
 - `password` (string): A 32-bit (8-character hexadecimal) access password that matches the protection password
 
 **Behavior:**
-- Tag returns to normal operation mode
-- Tag responds to standard inventory operations from all readers
-- Tag becomes visible and discoverable in normal reads
-- All Gen2 commands are accessible without authentication
+- Tag returns to normal, visible inventory behavior
+- Standard Gen2 operations are restored for all readers
+- No password-based protection remains on the tag

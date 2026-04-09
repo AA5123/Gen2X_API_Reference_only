@@ -1,6 +1,4 @@
-﻿## disable_fastid
-
-**Description:**
+﻿**Description:**
 Disables the FastID feature, returning tags to standard inventory mode where they return only the EPC (Electronic Product Code).
 
 **Usage:**
@@ -10,8 +8,6 @@ Send this command to deactivate FastID on the reader. Once disabled, tags will o
 - `enabled` (boolean): Set to `false` to disable FastID feature
 
 **Behavior:**
-- Tags return only EPC in inventory responses
-- TID is no longer included in standard inventory
-- Separate TID read operations required if TID data needed
-- Response payload size decreases
-- Feature remains disabled across reader sessions until re-enabled
+- Tags return only EPC in standard inventory responses
+- TID requires a separate read operation when needed
+- FastID stays disabled until explicitly enabled again

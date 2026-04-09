@@ -1,6 +1,4 @@
-﻿## quiet_tags
-
-**Description:**
+﻿**Description:**
 Selectively silences one or more specific tags by their EPC ID, preventing them from responding to inventory rounds without affecting other tags.
 
 **Usage:**
@@ -13,8 +11,6 @@ Send this command with an array of one or more EPC IDs to quiet. Quieted tags wi
   - Format: EPC ID strings matching tag identifier format
 
 **Behavior:**
-- Specified tags stop responding to inventory operations
-- Quieted tags do not transmit RF signals
-- Other tags continue normal inventory participation
-- Quiet state persists until explicitly unquieted
-- Multiple quiet commands accumulate tag silence list
+- Specified tags are silenced and stop participating in inventory rounds
+- Other tags continue normal operation unaffected
+- Quiet state persists until those tags are unquieted

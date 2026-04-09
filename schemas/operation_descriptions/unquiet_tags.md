@@ -1,6 +1,4 @@
-﻿## unquiet_tags
-
-**Description:**
+﻿**Description:**
 Restores previously silenced tags, allowing them to resume normal participation in inventory rounds.
 
 **Usage:**
@@ -14,7 +12,5 @@ Send this command with the EPC IDs of the tags you wish to restore. These must b
 
 **Behavior:**
 - Specified tags resume normal inventory participation
-- Tags return to standard RF response mode
-- Restored tags appear in subsequent inventory rounds
-- Tags not listed remain in quiet state
-- Restore state persists until tags are quieted again
+- Tags not listed remain quiet
+- Restored tags stay active until quieted again

@@ -1,6 +1,4 @@
-﻿## enable_fastid
-
-**Description:**
+﻿**Description:**
 Enables FastID feature so tags return both EPC (Electronic Product Code) and TID (Tag Identifier) in a single inventory response.
 
 **Usage:**
@@ -10,8 +8,6 @@ Send this command to activate FastID on the reader. Once enabled, each tag inven
 - `enabled` (boolean): Set to `true` to enable FastID feature
 
 **Behavior:**
-- Tags return both EPC and TID in single response
-- Inventory operations return dual data in one RF round
-- Overall read throughput and performance improve
+- Inventory responses include both EPC and TID in one read
 - Separate TID read operations are no longer required
-- Feature remains enabled across reader sessions until disabled
+- FastID remains enabled until explicitly disabled

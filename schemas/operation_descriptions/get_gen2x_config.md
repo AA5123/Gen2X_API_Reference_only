@@ -1,6 +1,4 @@
-﻿## get_gen2x_config
-
-**Description:**
+﻿**Description:**
 Retrieves and displays the current Gen2X configuration stored on the reader, including all enabled features and their settings.
 
 **Usage:**
@@ -10,8 +8,6 @@ Send this command with an empty payload to query the reader's current Gen2X conf
 - None (empty payload required)
 
 **Behavior:**
-- Returns the last applied Gen2X configuration
-- Includes all active feature settings
-- Shows TagProtect, FastID, TagFocus, and Tag Quieting states
-- Returns empty object if no configuration exists
-- Configuration persists across reader stops unless explicitly changed
+- Returns the current stored Gen2X configuration
+- Includes feature states such as TagProtect, FastID, TagFocus, and Tag Quieting
+- Returns an empty object if no Gen2X configuration is set

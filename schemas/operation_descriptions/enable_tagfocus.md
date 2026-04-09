@@ -1,6 +1,4 @@
-﻿## enable_tagfocus
-
-**Description:**
+﻿**Description:**
 Enables TagFocus feature so tags that have already been inventoried remain silent in subsequent inventory rounds, allowing the reader to focus exclusively on new or unread tags.
 
 **Usage:**
@@ -10,8 +8,6 @@ Send this command to activate TagFocus on the reader. Once enabled, any tag that
 - `enabled` (boolean): Set to `true` to enable TagFocus feature
 
 **Behavior:**
-- Previously inventoried tags become silent (do not respond)
-- Reader focuses RF energy on new, unread tags
-- Overall throughput increases in high-density environments
-- Duplicate reads are eliminated during active session
-- Feature applies to session S1; resets when new session begins
+- Previously inventoried tags become non-responsive in subsequent rounds
+- Reader focuses on unread tags, reducing duplicate reads
+- Behavior applies to session S1 while TagFocus is enabled

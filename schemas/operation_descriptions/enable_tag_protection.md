@@ -1,6 +1,4 @@
-﻿## enable_tag_protection
-
-**Description:**
+﻿**Description:**
 Locks an RFID tag using a 32-bit access password to prevent unauthorized access and inventory operations.
 
 **Usage:**
@@ -11,7 +9,6 @@ Send this command with the target tag's EPC ID and a 32-bit access password. Onc
 - `access_password` (string): A 32-bit (8-character hexadecimal) password required to unlock the tag
 
 **Behavior:**
-- Tag stops responding to standard inventory operations
-- Tag becomes RF silent and non-discoverable
-- All Gen2 commands are blocked until authentication
-- Protection remains active until explicitly disabled with the correct password
+- Tag becomes RF silent and stops normal inventory responses
+- Gen2 access is blocked until the correct password is provided
+- Protection remains active until explicitly disabled

@@ -1,6 +1,4 @@
-﻿## disable_tag_visibility
-
-**Description:**
+﻿**Description:**
 Revokes the reader's temporary authorization to see protected tags, restoring them to invisible status in inventory operations.
 
 **Usage:**
@@ -10,8 +8,6 @@ Send this command with the 32-bit access password to revoke the reader's visibil
 - `password` (string): A 32-bit (8-character hexadecimal) access password for authentication
 
 **Behavior:**
-- Reader's visibility authorization is revoked
-- Protected tags become invisible in inventory results
-- Tags remain in protected state (locked)
-- Reader cannot interact with protected tags until visibility is re-enabled
-- Tags do not respond or transmit to the reader
+- Reader visibility authorization is revoked for protected tags
+- Protected tags no longer appear in inventory results
+- Tags remain protected and require re-enabling visibility to be inventoried
