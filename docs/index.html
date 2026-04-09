@@ -98,6 +98,7 @@
 
     /* ── Schema to flat table with inline expand/collapse ── */
     var schemaUid = 0;
+    var schemaTableUid = 0;
     function schemaRows(schema, depth, parentUid) {
       if (!schema || !schema.properties) return '';
       depth = depth || 0;
@@ -144,8 +145,13 @@
 
     function schemaTable(schema) {
       if (!schema || !schema.properties) return '';
+      var tableId = 'schema-table-' + (++schemaTableUid);
       var rows = schemaRows(schema, 0, null);
-      return '<table class="schema-table"><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>' + rows + '</tbody></table>';
+      return '<div class="schema-toolbar">' +
+        '<button type="button" class="schema-toolbar-btn" data-schema-table="' + tableId + '" data-schema-action="expand">Expand all</button>' +
+        '<button type="button" class="schema-toolbar-btn" data-schema-table="' + tableId + '" data-schema-action="collapse">Collapse all</button>' +
+        '</div>' +
+        '<table class="schema-table" data-schema-table-id="' + tableId + '"><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody>' + rows + '</tbody></table>';
     }
 
     /* ── Error codes table ────────────────────────────── */
@@ -266,6 +272,33 @@
           nestedToggle.textContent = '+';
           collapseChildren(nestedToggle.getAttribute('data-target'));
         }
+      });
+    }
+
+    function wireSchemaToolbars() {
+      document.querySelectorAll('.schema-toolbar-btn').forEach(function (btn) {
+        if (btn.getAttribute('data-wired')) return;
+        btn.setAttribute('data-wired', '1');
+        btn.addEventListener('click', function () {
+          var tableId = btn.getAttribute('data-schema-table');
+          var table = document.querySelector('[data-schema-table-id="' + tableId + '"]');
+          if (!table) return;
+          if (btn.getAttribute('data-schema-action') === 'expand') {
+            table.querySelectorAll('.schema-row').forEach(function (row) {
+              row.style.display = '';
+            });
+            table.querySelectorAll('.schema-toggle-inline').forEach(function (toggle) {
+              toggle.textContent = '\u2212';
+            });
+          } else {
+            table.querySelectorAll('.schema-row[data-parent]').forEach(function (row) {
+              row.style.display = 'none';
+            });
+            table.querySelectorAll('.schema-toggle-inline').forEach(function (toggle) {
+              toggle.textContent = '+';
+            });
+          }
+        });
       });
     }
 
@@ -520,6 +553,7 @@
       addCopyButtons();
 
       wireSchemaToggles();
+      wireSchemaToolbars();
       if (window.Prism) Prism.highlightAllUnder(document.getElementById('content'));
 
       /* Wire example dropdowns */
