@@ -7,7 +7,7 @@
     },
     "tags": [
         {
-            "name": "Tag Protection",
+            "name": "Protected mode",
             "description": "﻿Use TagProtect to lock individual tags with a 32-bit password. A protected tag is invisible to all readers until you provide the correct password, preventing unauthorized reading and cloning.\n\nUse the commands in this section to enable or disable protection on a tag, configure reader visibility, and enable short-range mode."
         },
         {
@@ -33,9 +33,9 @@
     ],
     "x-tagGroups": [
         {
-            "name": "Tag Protection",
+            "name": "Protected mode",
             "tags": [
-                "Tag Protection"
+                "Protected mode"
             ]
         },
         {
@@ -58,7 +58,7 @@
         "/enable_tag_protection": {
             "post": {
                 "tags": [
-                    "Tag Protection"
+                    "Protected mode"
                 ],
                 "summary": "Enable Tag Protection",
                 "description": "﻿Locks a specific tag so it becomes invisible to all readers that don't have the correct password.\n\nProvide the tag's EPC ID and 32-bit access password. After you send this command, the tag stops responding to standard inventory and doesn't respond to Gen2 commands unless the reader provides the correct password.",
@@ -210,7 +210,7 @@
         "/disable_tag_protection": {
             "post": {
                 "tags": [
-                    "Tag Protection"
+                    "Protected mode"
                 ],
                 "summary": "Disable Tag Protection",
                 "description": "﻿Removes the TagProtect lock from a specific tag. After you send this command, the tag becomes visible to all readers without requiring a password.\n\nProvide the same EPC ID and password that you used when you enabled protection.",
@@ -362,7 +362,7 @@
         "/enable_tag_visibility": {
             "post": {
                 "tags": [
-                    "Tag Protection"
+                    "Protected mode"
                 ],
                 "summary": "Enable Tag Visibility",
                 "description": "﻿Grants the reader permission to see protected tags during inventory. Provide the correct access password and the reader uses it to unmask protected tags in inventory rounds.\n\nYou don't need to specify individual tag IDs. All protected tags that match the password become visible to the reader.",
@@ -533,7 +533,7 @@
         "/disable_tag_visibility": {
             "post": {
                 "tags": [
-                    "Tag Protection"
+                    "Protected mode"
                 ],
                 "summary": "Disable Tag Visibility",
                 "description": "﻿Revokes the reader's permission to see protected tags. After you send this command, the reader no longer surfaces protected tags in inventory results, even if a password was previously configured.",
@@ -704,7 +704,7 @@
         "/enable_short_range": {
             "post": {
                 "tags": [
-                    "Tag Protection"
+                    "Protected mode"
                 ],
                 "summary": "Enable Short Range",
                 "description": "﻿Protects a specific tag and restricts it to respond only when it's physically close to the antenna (short-range mode).\n\nThis is useful for precise picking, point-of-sale, or any scenario where you need to ensure only the nearest tag is read. Provide the tag EPC ID, the 32-bit access password, and set `enableShortRange` to `true`.",
