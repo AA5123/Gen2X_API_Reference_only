@@ -1,3 +1,19 @@
-﻿Protects a specific tag and restricts it to respond only when it's physically close to the antenna (short-range mode).
+﻿## enable_short_range
 
-This is useful for precise picking, point-of-sale, or any scenario where you need to ensure only the nearest tag is read. Provide the tag EPC ID, the 32-bit access password, and set `enableShortRange` to `true`.
+**Description:**
+Protects an RFID tag with a 32-bit access password and restricts its response range to short distance only, preventing reads from distant antennas.
+
+**Usage:**
+Send this command with the target tag's EPC ID, a 32-bit access password, and set `enableShortRange` to `true`. The tag enters a restricted mode where it only responds to readers in close physical proximity. This is ideal for precise point-of-sale operations, detailed inventory picking, or any scenario requiring location-specific tag reads. The tag remains protected and inaccessible to distant readers.
+
+**Parameters:**
+- `tagID` (string): The unique EPC identifier of the tag to protect
+- `password` (string): A 32-bit (8-character hexadecimal) password for accessing the tag
+- `enableShortRange` (boolean): Set to `true` to limit tag response range to close proximity
+
+**Behavior:**
+- Tag enters protected mode with short-range restriction
+- Tag stops responding to distant antennas
+- Tag only responds to readers in close proximity
+- Tag becomes RF silent to long-range reads
+- Both password protection and range restriction remain active until explicitly disabled

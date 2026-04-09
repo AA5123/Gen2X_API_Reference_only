@@ -1,1 +1,17 @@
-﻿Revokes the reader's permission to see protected tags. After you send this command, the reader no longer surfaces protected tags in inventory results, even if a password was previously configured.
+﻿## disable_tag_visibility
+
+**Description:**
+Revokes the reader's temporary authorization to see protected tags, restoring them to invisible status in inventory operations.
+
+**Usage:**
+Send this command with the 32-bit access password to revoke the reader's visibility permissions. After sending this command, the reader will no longer surface protected tags in inventory results, and protected tags return to RF silent status. This does not unlock the tags; it only prevents the reader from seeing them.
+
+**Parameters:**
+- `password` (string): A 32-bit (8-character hexadecimal) access password for authentication
+
+**Behavior:**
+- Reader's visibility authorization is revoked
+- Protected tags become invisible in inventory results
+- Tags remain in protected state (locked)
+- Reader cannot interact with protected tags until visibility is re-enabled
+- Tags do not respond or transmit to the reader
