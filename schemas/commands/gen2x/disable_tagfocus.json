@@ -1,5 +1,6 @@
 {
     "title": "disable_tagfocus",
+    "x-summary": "Disable TagFocus",
     "description": "Disables TagFocus. All tags respond normally whether previously read or not.",
     "x-tag": "TagFocus",
     "type": "object",

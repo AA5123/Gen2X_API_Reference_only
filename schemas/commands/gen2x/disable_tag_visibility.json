@@ -1,5 +1,6 @@
 {
     "title": "disable_tag_visibility",
+    "x-summary": "Clear Protected Mode Configuration",
     "description": "Revokes the reader's ability to see protected tags.",
     "x-tag": "Protected Mode",
     "type": "object",
@@ -45,7 +46,7 @@
                             "description": "8-character hexadecimal 32-bit password"
                         }
                     },
-                    "description": "Tag protection configuration"
+                    "description": "Protected Mode configuration"
                 }
             },
             "description": "Command payload containing the feature configuration"

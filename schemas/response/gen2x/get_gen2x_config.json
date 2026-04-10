@@ -54,7 +54,7 @@
                             "type": "boolean"
                         }
                     },
-                    "description": "Tag protection configuration (present only if previously configured)"
+                    "description": "Protected Mode configuration (present only if previously configured)"
                 },
                 "tagFocus": {
                     "type": "object",

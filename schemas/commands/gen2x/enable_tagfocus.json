@@ -1,5 +1,6 @@
 {
     "title": "enable_tagfocus",
+    "x-summary": "Enable TagFocus",
     "description": "Enables TagFocus so already-inventoried tags stay unresponsive, allowing the reader to focus on unread tags. Targets tags inventoried in session S1.",
     "x-tag": "TagFocus",
     "type": "object",

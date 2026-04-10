@@ -1,5 +1,6 @@
 {
   "title": "enable_tag_protection",
+  "x-summary": "Enable Impinj Protected Mode",
   "description": "Locks a specific tag using Impinj TagProtect so it becomes invisible to all readers that do not have the correct password.",
   "x-tag": "Protected Mode",
   "type": "object",
@@ -26,7 +27,7 @@
             "action": {
               "type": "string",
               "const": "enableTagProtection",
-              "description": "Enables Tag Protection on the tag"
+              "description": "Enables Protected Mode on the tag"
             },
             "password": {
               "type": "string",
@@ -40,7 +41,7 @@
               "description": "Tag EPC ID"
             }
           },
-          "description": "Tag protection configuration"
+          "description": "Protected Mode configuration"
         }
       }
     }

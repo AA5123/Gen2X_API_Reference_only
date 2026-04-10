@@ -60,13 +60,14 @@
                 "tags": [
                     "Protected Mode"
                 ],
-                "summary": "Enable Tag Protection",
+                "summary": "Enable Impinj Protected Mode",
                 "description": "﻿**Description:**\nEnable Impinj Protected Mode — Locks an RFID tag using a 32-bit access password, rendering it invisible to readers.\n\n**Usage:**\nSend this command with the target tag's EPC ID and a 32-bit access password. Once enabled, the tag enters Protected Mode and ceases to respond to standard inventory commands. The tag remains RF silent and inaccessible until a reader provides the correct password.\n\n**Persistence:** The tag itself remains in Protected Mode permanently until explicitly unprotected via Disable Impinj Protected Mode. The protection state is stored on the tag, not the reader.\n\n**Parameters:**\n- `action` (string): Set to `enableTagProtection` to enable Protected Mode for the tag\n- `tagID` (string): The unique EPC identifier of the tag to protect\n- `password` (string): A 32-bit (8-character hexadecimal) password used for Protected Mode access",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Enable Impinj Protected Mode",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -102,7 +103,7 @@
                                                 "properties": {
                                                     "action": {
                                                         "type": "string",
-                                                        "description": "Enables Tag Protection on the tag",
+                                                        "description": "Enables Protected Mode on the tag",
                                                         "enum": [
                                                             "enableTagProtection"
                                                         ]
@@ -119,7 +120,7 @@
                                                         "description": "Tag EPC ID"
                                                     }
                                                 },
-                                                "description": "Tag protection configuration"
+                                                "description": "Protected Mode configuration"
                                             }
                                         }
                                     }
@@ -212,13 +213,14 @@
                 "tags": [
                     "Protected Mode"
                 ],
-                "summary": "Disable Tag Protection",
+                "summary": "Disable Impinj Protected Mode",
                 "description": "﻿**Description:**\nDisable Impinj Protected Mode — Removes the 32-bit access password protection from an RFID tag, restoring normal operation.\n\n**Usage:**\nSend this command with the target tag's EPC ID and the 32-bit access password that was used to enable Protected Mode. Once disabled, the tag returns to normal operation and responds to all standard inventory commands without authentication.\n\n**Parameters:**\n- `action` (string): Set to `disableTagProtection` to disable Protected Mode for the tag\n- `tagID` (string): The unique EPC identifier of the tag to remove protection from\n- `password` (string): A 32-bit (8-character hexadecimal) access password that matches the protection password",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Disable Impinj Protected Mode",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -254,7 +256,7 @@
                                                 "properties": {
                                                     "action": {
                                                         "type": "string",
-                                                        "description": "Disables Tag Protection on the tag",
+                                                        "description": "Disables Protected Mode on the tag",
                                                         "enum": [
                                                             "disableTagProtection"
                                                         ]
@@ -271,7 +273,7 @@
                                                         "description": "Tag EPC ID"
                                                     }
                                                 },
-                                                "description": "Tag protection configuration"
+                                                "description": "Protected Mode configuration"
                                             }
                                         }
                                     }
@@ -364,13 +366,14 @@
                 "tags": [
                     "Protected Mode"
                 ],
-                "summary": "Enable Tag Visibility",
+                "summary": "Enable Inventory of Protected Tags",
                 "description": "﻿**Description:**\nEnable Inventory of Protected Tags — Grants the reader authorization to inventory protected tags using the correct 32-bit access password.\n\n**Usage:**\nSend this command with the 32-bit access password. The reader will use this password to authenticate and unmask all protected tags that match during inventory rounds. This allows the reader to interact with protected tags without permanently removing their Protected Mode.\n\n**Persistence:** The authorization remains active across stop/start cycles as long as the MQTT session stays connected. A reader reboot or MQTT disconnect clears the authorization, and you must re-send this command to restore visibility.\n\n**Parameters:**\n- `action` (string): Set to `enableTagVisibility` to allow inventory of protected tags\n- `password` (string): A 32-bit (8-character hexadecimal) access password for authentication",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Enable Inventory of Protected Tags",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -418,7 +421,7 @@
                                                         "description": "8-character hexadecimal 32-bit password"
                                                     }
                                                 },
-                                                "description": "Tag protection configuration"
+                                                "description": "Protected Mode configuration"
                                             }
                                         },
                                         "description": "Command payload containing the feature configuration"
@@ -535,13 +538,14 @@
                 "tags": [
                     "Protected Mode"
                 ],
-                "summary": "Disable Tag Visibility",
+                "summary": "Clear Protected Mode Configuration",
                 "description": "﻿**Description:**\nClear Protected Mode Configuration — Revokes the reader's authorization to inventory protected tags, restoring them to invisible status.\n\n**Usage:**\nSend this command with the 32-bit access password to revoke the reader's visibility permissions. After sending this command, the reader will no longer surface protected tags in inventory results. This does not remove Protected Mode from the tags; it only prevents the reader from seeing them.\n\n**Parameters:**\n- `action` (string): Set to `disableTagVisibility` to stop inventory of protected tags\n- `password` (string): A 32-bit (8-character hexadecimal) access password for authentication",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Clear Protected Mode Configuration",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -589,7 +593,7 @@
                                                         "description": "8-character hexadecimal 32-bit password"
                                                     }
                                                 },
-                                                "description": "Tag protection configuration"
+                                                "description": "Protected Mode configuration"
                                             }
                                         },
                                         "description": "Command payload containing the feature configuration"
@@ -706,13 +710,14 @@
                 "tags": [
                     "Protected Mode"
                 ],
-                "summary": "Enable Short Range",
+                "summary": "Enable Protected Mode with Short Range",
                 "description": "﻿**Description:**\nEnable Impinj Protected Mode with Short Range — Protects an RFID tag with a 32-bit access password and restricts its response range to short distance only.\n\n**Usage:**\nSend this command with the target tag's EPC ID, a 32-bit access password, and set `enableShortRange` to `true`. The tag enters Protected Mode and only responds to readers in close physical proximity. This is ideal for point-of-sale operations or scenarios requiring location-specific tag reads.\n\n**Persistence:** The tag itself remains in Protected Mode with short-range restriction permanently until explicitly unprotected.\n\n**Parameters:**\n- `action` (string): Set to `enableTagProtection` to enable Protected Mode with short-range behavior\n- `tagID` (string): The unique EPC identifier of the tag to protect\n- `password` (string): A 32-bit (8-character hexadecimal) password for accessing the tag\n- `enableShortRange` (boolean): Set to `true` to limit tag response range to close proximity",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Enable Protected Mode with Short Range",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -749,7 +754,7 @@
                                                 "properties": {
                                                     "action": {
                                                         "type": "string",
-                                                        "description": "Sets the tag to protected mode",
+                                                        "description": "Enables Protected Mode on the tag",
                                                         "enum": [
                                                             "enableTagProtection"
                                                         ]
@@ -771,7 +776,7 @@
                                                         "description": "true to enable short-range protection mode for higher security"
                                                     }
                                                 },
-                                                "description": "Tag protection configuration"
+                                                "description": "Protected Mode configuration"
                                             }
                                         },
                                         "description": "Command payload containing the feature configuration"
@@ -897,13 +902,14 @@
                 "tags": [
                     "FastID"
                 ],
-                "summary": "Enable Fastid",
+                "summary": "Enable FastID",
                 "description": "﻿**Description:**\nEnables FastID feature so tags return both EPC (Electronic Product Code) and TID (Tag Identifier) in a single inventory response.\n\n**Usage:**\nSend this command to activate FastID on the reader. Once enabled, each tag inventory response includes both the EPC and TID simultaneously, eliminating the need for separate TID read operations. This significantly improves inventory throughput and reduces the number of RF transmissions required.\n\n**Persistence:** FastID remains active across stop/start cycles as long as the MQTT session stays connected. A reader reboot or MQTT disconnect clears the setting, and you must re-send this command to re-enable it.\n\n**Parameters:**\n- `enabled` (boolean): Set to `true` to enable FastID feature",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Enable FastID",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -1052,13 +1058,14 @@
                 "tags": [
                     "FastID"
                 ],
-                "summary": "Disable Fastid",
+                "summary": "Disable FastID",
                 "description": "﻿**Description:**\nDisables the FastID feature, returning tags to standard inventory mode where they return only the EPC (Electronic Product Code).\n\n**Usage:**\nSend this command to deactivate FastID on the reader. Once disabled, tags will only return their EPC in inventory responses. If you need the TID (Tag Identifier), you must perform a separate dedicated TID read operation. This is useful for reducing response payload size or simplifying data processing when TID data is not required.\n\n**Parameters:**\n- `enabled` (boolean): Set to `false` to disable FastID feature",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Disable FastID",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -1207,13 +1214,14 @@
                 "tags": [
                     "TagFocus"
                 ],
-                "summary": "Enable Tagfocus",
+                "summary": "Enable TagFocus",
                 "description": "﻿**Description:**\nEnables TagFocus feature so tags that have already been inventoried remain silent in subsequent inventory rounds, allowing the reader to focus exclusively on new or unread tags.\n\n**Usage:**\nSend this command to activate TagFocus on the reader. Once enabled, any tag that has been successfully read in the current session (S1) will stop responding to subsequent inventory rounds. This dramatically improves read rates in dense tag environments by eliminating duplicate reads and concentrating RF energy on newly encountered tags.\n\n**Persistence:** TagFocus remains active across stop/start cycles as long as the MQTT session stays connected. A reader reboot or MQTT disconnect clears the setting, and you must re-send this command to re-enable it.\n\n**Parameters:**\n- `enabled` (boolean): Set to `true` to enable TagFocus feature",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Enable TagFocus",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -1362,13 +1370,14 @@
                 "tags": [
                     "TagFocus"
                 ],
-                "summary": "Disable Tagfocus",
+                "summary": "Disable TagFocus",
                 "description": "﻿**Description:**\nDisables the TagFocus feature, returning tags to normal operational mode where all tags respond to every inventory round regardless of prior reads.\n\n**Usage:**\nSend this command to deactivate TagFocus on the reader. Once disabled, all tags will respond to every inventory round, even if they were previously read in the current session. This is useful when you need to track tag movement, verify tag presence continuously, or when inventory redundancy is more important than throughput optimization.\n\n**Parameters:**\n- `enabled` (boolean): Set to `false` to disable TagFocus feature",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "x-summary": "Disable TagFocus",
                                 "type": "object",
                                 "required": [
                                     "command",
@@ -1989,7 +1998,7 @@
                                                             "type": "boolean"
                                                         }
                                                     },
-                                                    "description": "Tag protection configuration (present only if previously configured)"
+                                                    "description": "Protected Mode configuration (present only if previously configured)"
                                                 },
                                                 "tagFocus": {
                                                     "type": "object",
@@ -2208,7 +2217,7 @@
                     "Control Commands"
                 ],
                 "summary": "Stop",
-                "description": "**Description:**\nStops the reader radio immediately, halting all inventory operations and RF transmissions.\n\n**Usage:**\nSend this command with an empty payload to stop the reader radio. You must stop the radio before applying any Gen2X configuration changes such as enabling/disabling tag protection, FastID, TagFocus, or tag quieting. Always wait for the success response before attempting to configure settings or restart the radio. Stopping the reader is mandatory for synchronized configuration management.\n\n**Parameters:**\n- None (empty payload required)",
+                "description": "**Description:**\nStops the reader radio immediately, halting all inventory operations and RF transmissions.\n\n**Usage:**\nSend this command with an empty payload to stop the reader radio. You must stop the radio before applying any Gen2X configuration changes such as enabling/disabling Protected Mode, FastID, TagFocus, or Tag Quieting. Always wait for the success response before attempting to configure settings or restart the radio. Stopping the reader is mandatory for synchronized configuration management.\n\n**Parameters:**\n- None (empty payload required)",
                 "requestBody": {
                     "required": true,
                     "content": {
