@@ -36,12 +36,8 @@ externalDocs:
   description: Find out more about IoT
   url: https://zebradevs.github.io/rfid-ziotc-docs/
 servers:
-  - url: '{url}'
+  - url: http://<device-ip>:<port>
     description: Device REST API base URL
-    variables:
-      url:
-        default: http://<device-ip>:<port>
-        description: Example base URL for the target device
 paths:
   /cloud/impinjGen2X:
     get:
